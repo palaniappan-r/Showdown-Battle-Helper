@@ -41,6 +41,12 @@ def extract_mon_names(arr):
                 mon1 = i
             else:
                 mon2 = i
+    arr = mon1.split('-')
+    if(len(arr) > 1 and arr[1].lower() == 'gmax'):
+        mon1 = arr[0]
+    arr = mon2.split('-')
+    if(len(arr) > 1 and arr[1].lower() == 'gmax'):
+        mon2 = arr[0]
     return mon1,mon2
     
     

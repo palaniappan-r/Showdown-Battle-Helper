@@ -53,12 +53,3 @@ if(msg == "R" or msg == "r"):
                     print(turn)
                     print()
                     printTurn()
-
-
-
-    
-    
-
-
-
-#driver.find_element_by_name("username").send_keys(Keys.RETURN)
