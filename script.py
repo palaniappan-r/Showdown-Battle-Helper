@@ -9,16 +9,31 @@ import functions
 
 import os
 import time
+import sys
 
 os.system('clear')
+
+err_count = 0
 
 def get_turn():
     try:
         turn = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[10]/div").text 
         return turn
-    except:
+    except Exception as e:
+        print(f"ERROR : {e} (Program will be suspended for 5 seconds and then continue) \n\n")
         time.sleep(5)
+        err_count += 1
+        if(err_count == 10):
+            print("Too many errors. Program terminated.")
+            sys.exit(0)
         get_turn()
+        
+def checkIfEnded():
+    try:
+        driver.find_element(By.XPATH,"/html/body/div[4]/div[5]/div/p[2]/button[2]").text
+        return True
+    except:
+        return False
 
 
 def printTurn():
@@ -29,27 +44,35 @@ def printTurn():
     functions.printData(mon_usr,mon_opp)
     print()
     functions.printData(mon_opp,mon_usr)
+    return temp
 
 driver = webdriver.Chrome("chromedriver")
 
 driver.get("https://play.pokemonshowdown.com/")
-
-msg = input()
-
-flag = True
-
 temp = ""
 
 
-if(msg == "R" or msg == "r"):
-    while(True):
-        turn = get_turn()
-        if(turn is None) == False:
-            if(turn != temp):
-                temp = turn
-                if(turn.split(" ")[0] == "Turn"):
-                    os.system('clear')
-                    print()
-                    print(turn)
-                    print()
-                    printTurn()
+def battleStart(temp):
+    try:
+        if(msg == "R" or msg == "r"):
+            while(checkIfEnded() == False):
+                turn = get_turn()
+                if(turn is None) == False and (turn != temp):
+                    temp = turn
+                    if(turn.split(" ")[0] == "Turn"):
+                        os.system('clear')
+                        print("\t**********************************************")
+                        print("\t***     Pokémon Showdown Battle Helper     ***")
+                        print("\t**********************************************")
+                        print()
+                        print(turn)
+                        print()
+                        printTurn()
+    except Exception as e:
+        print(f"ERROR : {e}\nPulled Data : {printTurn()}\nProceeding Anyway\n")
+        battleStart(temp)
+        
+        
+        
+msg = input()      
+battleStart(temp)

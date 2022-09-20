@@ -1,4 +1,5 @@
 from email.policy import default
+from lib2to3.pgen2 import driver
 import pandas as pd
 import os
 dataObj = pd.read_json('gen8randombattle.json')
@@ -79,6 +80,11 @@ def printData(mon_name,mon2_name):
     for j in mon["moves"] : 
         move_type = moves[moves['Name'] == j]['Type'].values[0]
         dmg = getDmg(move_type,type1,type2)
+        move_cat = moves[moves['Name'] == j]['Category'].values[0]
+        
+        if(move_cat == 'Status'):
+          print(f"{bcolors.WARNING}{j}{bcolors.ENDC} -> Status")  
+          continue
         
         if dmg == 4:
             print(
@@ -129,4 +135,5 @@ def getDmg(move_type,mon_type1,mon_type2):
         dmg = dmg = damage_array[pokemon_types.index(move_type)][pokemon_types.index(mon_type1)]
 
     return dmg
+
                 
