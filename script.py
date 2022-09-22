@@ -17,12 +17,12 @@ err_count = 0
 
 def get_turn():
     try:
-        turn = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[10]/div").text 
+        turn = driver.find_element(By.XPATH,"/html/body/div[5]/div[1]/div/div[10]/div").text 
         return turn
     except Exception as e:
         print(f"ERROR : {e} (Program will be suspended for 5 seconds and then continue) \n\n")
         time.sleep(5)
-        err_count += 1
+        err_count = 1
         if(err_count == 10):
             print("Too many errors. Program terminated.")
             sys.exit(0)
@@ -37,7 +37,7 @@ def checkIfEnded():
 
 
 def printTurn():
-    active_mons = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[6]").text
+    active_mons = driver.find_element(By.XPATH,"/html/body/div[5]/div[1]/div/div[6]").text
     print()
     temp = active_mons.split()
     mon_usr,mon_opp = functions.extract_mon_names(temp)
@@ -69,7 +69,7 @@ def battleStart(temp):
                         print()
                         printTurn()
     except Exception as e:
-        print(f"ERROR : {e}\nPulled Data : {printTurn()}\nProceeding Anyway\n")
+        print(f"ERROR\nProceeding Anyway\n")
         battleStart(temp)
         
         
