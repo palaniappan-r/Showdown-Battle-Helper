@@ -60,7 +60,7 @@ def battleStart(temp):
                     if(turn.split(" ")[0] == "Turn"):
                         os.system('clear')
                         print("\t**********************************************")
-                        print("\t***     Pokémon Showdown Battle Helper     ***")
+                        print("\t***     Pokémon Showdown Battle Script     ***")
                         print("\t**********************************************")
                         print()
                         print(turn)
