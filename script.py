@@ -20,7 +20,7 @@ def get_turn():
         turn = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[10]/div").text 
         return turn
     except Exception as e:
-        print(f"ERROR : (Program will be suspended for 5 seconds and then continue) \n\n")
+        print(f"(Program will be suspended for 5 seconds and then continue) \n\n")
         time.sleep(5)
         err_count = 1
         if(err_count == 10):
