@@ -20,7 +20,7 @@ def get_turn():
         turn = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[10]/div").text 
         return turn
     except Exception as e:
-        print(f"(Program will be suspended for 5 seconds and then continue) \n\n")
+        print(f"\n\n(Script Suspended for 5 secs)")
         time.sleep(5)
         err_count = 1
         if(err_count == 10):
@@ -39,9 +39,9 @@ def checkIfEnded():
 def printTurn():
     mon_usr = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[6]/div[1]").text.split(' ')[0]
     mon_opp = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[6]/div[2]").text.split(' ')[0]
-    functions.printData(mon_usr,mon_opp)
-    print()
     functions.printData(mon_opp,mon_usr)
+    print()
+    functions.printData(mon_usr,mon_opp)
     return temp
 
 driver = webdriver.Chrome("chromedriver")
