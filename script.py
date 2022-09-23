@@ -17,7 +17,7 @@ err_count = 0
 
 def get_turn():
     try:
-        turn = driver.find_element(By.XPATH,"/html/body/div[5]/div[1]/div/div[10]/div").text 
+        turn = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[10]/div").text 
         return turn
     except Exception as e:
         print(f"ERROR : {e} (Program will be suspended for 5 seconds and then continue) \n\n")
@@ -37,10 +37,8 @@ def checkIfEnded():
 
 
 def printTurn():
-    active_mons = driver.find_element(By.XPATH,"/html/body/div[5]/div[1]/div/div[6]").text
-    print()
-    temp = active_mons.split()
-    mon_usr,mon_opp = functions.extract_mon_names(temp)
+    mon_usr = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[6]/div[1]").text.split(' ')[0]
+    mon_opp = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[6]/div[2]").text.split(' ')[0]
     functions.printData(mon_usr,mon_opp)
     print()
     functions.printData(mon_opp,mon_usr)
