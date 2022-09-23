@@ -31,35 +31,25 @@ def loadData():
     dataObj = json.loads('gen8randombattle.json')
     
     return dataObj
-    
-def extract_mon_names(arr):
-    df = pd.read_csv("mon_data.csv")
-    mon1 = ""
-    mon2 = ""
-    for i in arr:
-        if i in df['Name'].values:
-            if mon1 == "":
-                mon1 = i
-            else:
-                mon2 = i
-    arr = mon1.split('-')
-    if(len(arr) > 1 and arr[1].lower() == 'gmax'):
-        mon1 = arr[0]
-    arr = mon2.split('-')
-    if(len(arr) > 1 and arr[1].lower() == 'gmax'):
-        mon2 = arr[0]
-    return mon1,mon2
-    
+
+def get_types(mon_name):
+    df = pd.read_json('pokedex.json')
+    mon_name = mon_name.lower().replace(" ","").replace("-","")
+    mon_types = df[mon_name]['types']
+    if(len(mon_types) == 1) : 
+        type1 = mon_types[0]
+        type2 = "-"
+    else : 
+        type1 = mon_types[0]
+        type2 = mon_types[1]
+
+    return type1,type2
     
 def printData(mon_name,mon2_name):
     mon = dataObj[mon_name]
     lv = mon["level"]
     
-
-    df = pd.read_csv('mon_data.csv')
-    df.drop('Num',axis = 1,inplace = True)
-    type1 = df[df['Name'] == mon2_name]['Type1'].values[0]
-    type2 = df[df['Name'] == mon2_name]['Type2'].values[0]
+    type1,type2 = get_types(mon2_name)
     
     print(
         f"{bcolors.BOLD}{bcolors.OKBLUE}{mon_name} Lv {lv}{bcolors.ENDC}{bcolors.ENDC}",end="\t"
