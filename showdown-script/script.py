@@ -1,0 +1,76 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+import functions
+
+import os
+import time
+import sys
+
+os.system('clear')
+
+err_count = 0
+
+def get_turn():
+    try:
+        turn = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[10]/div").text
+        return turn
+    except Exception as e:
+        print(f"\n\n(Script Suspended for 5 secs)")
+        time.sleep(5)
+        err_count = 1
+        if(err_count == 10):
+            print("Too many errors. Program terminated.")
+            sys.exit(0)
+        get_turn()
+
+def checkIfEnded():
+    try:
+        driver.find_element(By.XPATH,"/html/body/div[4]/div[5]/div/p[2]/button[2]").text
+        return True
+    except:
+        return False
+
+
+def printTurn():
+    mon_usr = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[6]/div[1]").text.split(' ')[0]
+    mon_opp = driver.find_element(By.XPATH,"/html/body/div[4]/div[1]/div/div[6]/div[2]").text.split(' ')[0]
+    functions.printData(mon_opp,mon_usr)
+    print()
+    functions.printData(mon_usr,mon_opp)
+    return temp
+
+driver = webdriver.Chrome("chromedriver")
+
+driver.get("https://play.pokemonshowdown.com/")
+temp = ""
+
+
+def battleStart(temp):
+    try:
+        if(msg == "R" or msg == "r"):
+            while(checkIfEnded() == False):
+                turn = get_turn()
+                if(turn is None) == False and (turn != temp):
+                    temp = turn
+                    if(turn.split(" ")[0] == "Turn"):
+                        os.system('clear')
+                        print("\t**********************************************")
+                        print("\t***     Pokémon Showdown Battle Script     ***")
+                        print("\t**********************************************")
+                        print()
+                        print(turn)
+                        print()
+                        printTurn()
+    except Exception as e:
+        print(f"ERROR\nProceeding Anyway\n")
+        battleStart(temp)
+
+        
+        
+msg = input()      
+battleStart(temp)
